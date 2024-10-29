@@ -1,41 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/models/article_model.dart';
 
 class NewsTile extends StatelessWidget {
-  const NewsTile({super.key});
-
+  const NewsTile({super.key, required ArticleModel articaleModel});
+  final ArticaleModel articaleModel;
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(6),
-          child: Image.asset(
-            'assets/download.jpg',
-            height: 200,
-            width: double.infinity,
-            fit: BoxFit.cover,
+        GestureDetector(
+          onTap: () => launchUrlString(articaleModel.url),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: CachedNetworkImage(
+              imageUrl: articaleModel.image ??
+                  "https://www.msi-viking.com/sca-dev-2023-1-0/img/no_image_available.jpeg",
+              progressIndicatorBuilder: (context, url, progress) =>
+                  const Center(child: CircularProgressIndicator()),
+              height: 200,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-        const SizedBox(
-          height: 12,
+        SizedBox(
+          height: 45,
+          child: Text(
+            articaleModel.title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
         ),
-        const Text(
-          'Large tie e  d jasjsjkdfjkl sd dsjkljslkjsd sjsdljsadl sdffsd sdfjdskj',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Colors.black87, fontSize: 20, fontWeight: FontWeight.w500),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        const Text(
-          'kdsskalldfslkasjsjlsljdsfalkjssasjlksjflkjfskjsdflksdjjslkfsjlfjsflj',
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-              color: Colors.grey, fontSize: 15, fontWeight: FontWeight.w400),
+        SizedBox(
+          height: 45,
+          child: Text(
+            articaleModel.subTitle ?? "",
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey,
+            ),
+          ),
         ),
       ],
     );

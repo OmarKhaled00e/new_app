@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: NewsListView(),
+              child: NewsListView(articles: [],),
             ),
           ],
         ),
